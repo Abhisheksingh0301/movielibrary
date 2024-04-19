@@ -1,0 +1,52 @@
+{% extends 'webapp/header.html' %}
+{% block a %}
+<!--{% load staticfiles %}
+<link   rel="stylesheet" type="text/css" href="{% static 'webapp/style.css' %}">-->
+
+
+
+<!--<body bgcolor="#1eb23f" text="#ffff00">-->
+<title>{%block b %}Movie{%endblock %}</title>
+<h1>{{ m1.actor }}</h1>
+<h1>{{ m1.actor_movie }}</h1>
+{% if error_message %}
+    <strong>{{error_message}}</strong>
+{% endif %}
+<form action="{% url 'webapp:favourite' m1.id %}" method="post">
+    {% csrf_token %}
+    {% for songs in m1.songs_set.all %}
+        <input type="radio" id="songs{{ forloop.counter }}" name="songs" value="{{songs.id}}"/>
+         <label for="songs{{ forloop.counter }}"> 
+            {{songs.song_name}}
+            {% if songs.is_favourite %}
+                <img src="http://www.sxccal.edu/news/documents/2019/ISO2019/ISO-SystemCertification.jpg" width="2%" height="2%">
+            {% endif %}
+        </label>
+		<br>
+    {% endfor %}
+    <input type="submit" value="favourite">
+</form>
+<ul>
+{% for song in m1.songs_set.all %}
+    <li>
+        {{ song.song_name}} --- {{ song.file_type }}
+    </li>
+{% endfor %}
+</ul>
+
+    <table border="2">
+        <tr>
+           <th width="30%">Song</th>
+           <th width="25%">File Type</th>
+        </tr>
+        {% for song in m1.songs_set.all %}
+            <tr>
+                <td>{{ song.song_name }}</td>
+                <td>{{ song.file_type }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+<!--</body>-->
+</html>
+{% endblock %}

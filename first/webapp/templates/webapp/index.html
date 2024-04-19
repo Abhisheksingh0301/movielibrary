@@ -1,0 +1,18 @@
+{% extends 'webapp/header.html' %}
+{% block a %}
+
+
+<title>Home Page</title>
+
+
+<h1>This is a new page</h1>
+<ul>
+    {% for a in all_movies %}
+    <li>
+        <a href = "{% url 'webapp:detail' a.id %}"> {{ a.actor }} </a>
+    </li>
+    {% endfor %}
+</ul>
+
+</html>
+{% endblock %}
